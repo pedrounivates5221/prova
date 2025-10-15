@@ -17,6 +17,7 @@ function insertTreino(atividade, duracaoMin, categoria) {
 function deleteTreino(id) {
   db.runSync('DELETE FROM treinos WHERE id = ?', [id]);
 }
+
 function contaTreinos() {
   const [resultado] = db.getAllSync('SELECT COUNT(*) FROM treinos');
   return resultado['COUNT(*)']; 
@@ -58,6 +59,10 @@ export default function sqlite() {
   function carregarTreinos() {
     setTreinos(getTreinos());
   }
+  function deleteTudo() {
+  db.runSync('DELETE FROM treinos ');
+  carregarTreinos();
+}
 
   function excluirTreino(id) {
     deleteTreino(id);
@@ -130,6 +135,7 @@ export default function sqlite() {
           <View style={estilos.botaoAcao}><Button title="Salvar" onPress={salvarTreino} disabled={!!editandoId} /></View>
           <View style={estilos.botaoAcao}><Button title="Atualizar" onPress={atualizarTreino} disabled={!editandoId} /></View>
           <View style={estilos.botaoAcao}><Button title="Limpar" onPress={limparCampos} /></View>
+          <View style={estilos.botaoAcao}><Button title="Excluir Tudo"  color="#b91c1c" onPress={deleteTudo} /></View>
         </View>
 
         <View style={estilos.linhaCarregar}><Button title="Carregar treinos" onPress={carregarTreinos} /></View>
